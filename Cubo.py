@@ -23,9 +23,9 @@ class Cubo:
         self.Position = [0,0,0]
         
         #Inicializar las coordenadas (x,y,z) del cubo en el tablero almacenandolas en el vector Position
-        self.Position[0] = random.randrange(-200,200)
+        self.Position[0] = random.randrange(-self.DimBoard,self.DimBoard)
         self.Position[1] = 1
-        self.Position[2] = random.randrange(-200,200)
+        self.Position[2] = random.randrange(-self.DimBoard,self.DimBoard)
 
         
         #Se inicializa un vector de direccion aleatorio
@@ -65,20 +65,20 @@ class Cubo:
         else:
             self.Direction[0] = self.Direction[0] * -1
             
-        if new_x >= self.DimBoard:
+        if new_x >= -self.DimBoard:
             self.Position[0] = new_x
         else:
-            self.Direction[0] = self.Direction[0] * 1
+            self.Direction[0] = self.Direction[0] * -1
                 
         if new_z <= self.DimBoard:
             self.Position[2] = new_z
         else:
             self.Direction[2] = self.Direction[2] * -1 
             
-        if new_z >= self.DimBoard:
+        if new_z >= -self.DimBoard:
             self.Position[2] = new_z
         else:
-            self.Direction[2] = self.Direction[2] * 1 
+            self.Direction[2] = self.Direction[2] * -1 
             
     def draw(self):
         sphere = gluNewQuadric()
