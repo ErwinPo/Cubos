@@ -16,6 +16,14 @@ class Cubo:
         self.vertexCoords = [  
                    1,1,1,   1,1,-1,   1,-1,-1,   1,-1,1,
                   -1,1,1,  -1,1,-1,  -1,-1,-1,  -1,-1,1  ]
+        #Se inicializa los colores de los vertices del cubo
+        self.vertexColors = [ 
+                   1,1,1,   1,0,0,   1,1,0,   0,1,0,
+                   0,0,1,   1,0,1,   0,0,0,   0,1,1  ]
+        #Se inicializa el arreglo para la indexacion de los vertices
+        self.elementArray = [ 
+                  0,1,2,3, 0,3,7,4, 0,4,5,1,
+                  6,2,1,5, 6,5,4,7, 6,7,3,2  ]
         
         self.DimBoard = dim
         
@@ -24,7 +32,7 @@ class Cubo:
         
         #Inicializar las coordenadas (x,y,z) del cubo en el tablero almacenandolas en el vector Position
         self.Position[0] = random.randrange(-self.DimBoard,self.DimBoard)
-        self.Position[1] = 1
+        self.Position[1] = 5
         self.Position[2] = random.randrange(-self.DimBoard,self.DimBoard)
 
         
@@ -81,11 +89,14 @@ class Cubo:
             self.Direction[2] = self.Direction[2] * -1 
             
     def draw(self):
-        sphere = gluNewQuadric()
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled (10,10,10)
-        #Se dibuja el cubo
-        glColor3f(0.0,0.0,1.0)
-        gluSphere(sphere, 5 , 30, 15)
+        glScaled(5,5,5)
+        glEnableClientState(GL_VERTEX_ARRAY)
+        glEnableClientState(GL_COLOR_ARRAY)
+        glVertexPointer(3, GL_FLOAT, 0, self.vertexCoords)
+        glColorPointer(3, GL_FLOAT, 0, self.vertexColors)
+        glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, self.elementArray)
+        glDisableClientState(GL_VERTEX_ARRAY)
+        glDisableClientState(GL_COLOR_ARRAY)
         glPopMatrix()
