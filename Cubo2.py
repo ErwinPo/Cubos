@@ -46,7 +46,7 @@ class Cubo:
         
         self.alturaplataforma = 0.5
         self.contador = 0
-        self.condition = self.subiendo
+        self.condition = self.bajando
 
         #Inicializar las coordenadas (x, y, z) del cubo en el tablero almacenándolas en el vector Position
         self.Position[0] = random.randrange(-self.DimBoard, self.DimBoard)
@@ -90,14 +90,14 @@ class Cubo:
         if self.contador < 40 and self.condition == self.subiendo:
             self.contador += 1
             self.alturaplataforma += 0.5 #ACTUALIZAR POSICIÓN BASURA EJE Y
-        elif self.contador == 40 and self.condition == self.subiendo: 
-            self.condition = self.bajando
+        # elif self.contador == 40 and self.condition == self.subiendo: 
+        #     self.condition = self.bajando
         
-        elif self.contador > 0 and self.condition == self.bajando:
-            self.contador -= 1
-            self.alturaplataforma -= 0.5 #ACTUALIZAR POSICIÓN BASURA EJE Y
-        else: 
-            self.condition =self.subiendo
+        # elif self.contador > 0 and self.condition == self.bajando:
+        #     self.contador -= 1
+        #     self.alturaplataforma -= 0.5 #ACTUALIZAR POSICIÓN BASURA EJE Y
+        # else: 
+        #     self.condition =self.subiendo
 
 
         #Se debe verificar que el objeto cubo, con su nueva posible dirección
@@ -156,6 +156,7 @@ class Cubo:
 
                 self.carrying_basura = self.objetivo  #El cubo recoge la basura
                 self.objetivo = None
+                self.condition = self.subiendo
                 
                 
                 #if plano:
@@ -440,8 +441,7 @@ class Cubo:
         
       
             
-        
-           
+       
         if self.carrying_basura:
             #Mover basura
             self.carrying_basura.Position[0] = self.Position[0]
