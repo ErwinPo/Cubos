@@ -161,7 +161,7 @@ def PlanoTexturizado():
     glColor3f(1.0,1.0,1.0)
     glEnable(GL_TEXTURE_2D)
     #Front face
-    glBindTexture(GL_TEXTURE_2D, textures[1])
+    glBindTexture(GL_TEXTURE_2D, textures[0])
     glBegin(GL_QUADS)
     glTexCoord2f(0.0, 0.0)
     glVertex3d(-DimBoard, 0, -DimBoard)
