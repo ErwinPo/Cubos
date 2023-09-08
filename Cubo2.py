@@ -460,7 +460,9 @@ class Cubo:
        
         if self.carrying_basura:
             #Mover basura
-            self.carrying_basura.Position[0] = self.Position[0]
+            self.carrying_basura.Position[0] = self.Position[0] - 20
+            self.carrying_basura.Position[1] = self.Position[1] + 10
+
             self.carrying_basura.Position[2] = self.Position[2]
 
         glPopMatrix()

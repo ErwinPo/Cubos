@@ -213,7 +213,7 @@ def display():
         
     
     for cubo in cubos:
-        if -DimBoard2 / 2 <= cubo.Position[0] <= DimBoard2 / 2 and -DimBoard2 / 2 <= cubo.Position[2] <= DimBoard2 / 2:
+        if ((-DimBoard2 + 100) / 2) <= cubo.Position[0] <= DimBoard2 / 2 and -DimBoard2 / 2 <= cubo.Position[2] <= DimBoard2 / 2:
             #print("Cubo tocando plano")
             if cubo.carrying_basura:
                 print("Dejando basura en el plano")
