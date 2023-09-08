@@ -7,6 +7,7 @@ class Basura:
     def __init__(self, dim):
         self.size = 10  
         self.DimBoard = dim
+        self.pickedup = False
         self.Position = [
             random.uniform(-self.DimBoard, self.DimBoard),
             self.size / 2, 

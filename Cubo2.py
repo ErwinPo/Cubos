@@ -184,9 +184,10 @@ class Cubo:
         
                         
     def encontrar_nuevo(self, basuras_disponibles):
-        if not self.objetivo: 
+        while not self.objetivo: 
             objetivo = random.choice(basuras_disponibles)
-            self.objetivo = objetivo
+            if not objetivo.pickedup:
+                self.objetivo = objetivo
             
  
 
