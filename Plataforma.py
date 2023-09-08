@@ -1,3 +1,4 @@
+
 import pygame
 from pygame.locals import *
 
@@ -9,14 +10,16 @@ from OpenGL.GLUT import *
 import random
 import math
 
-class Cubo:
+import Cubo
+
+class Plataforma:
     
-    def __init__(self, dim, vel):
-        #Se inicializa las coordenadas de los vertices del cubo
+    def __init__(self,dim):
+        #Se inicializa las coordenadas de los vertices del Plataforma
         self.vertexCoords = [  
                    1,1,1,   1,1,-1,   1,-1,-1,   1,-1,1,
                   -1,1,1,  -1,1,-1,  -1,-1,-1,  -1,-1,1  ]
-        #Se inicializa los colores de los vertices del cubo
+        #Se inicializa los colores de los vertices del Plataforma
         self.vertexColors = [ 
                    1,1,1,   1,0,0,   1,1,0,   0,1,0,
                    0,0,1,   1,0,1,   0,0,0,   0,1,1  ]
@@ -30,7 +33,7 @@ class Cubo:
         #Se inicializa una posicion aleatoria en el tablero
         self.Position = [0,0,0]
         
-        #Inicializar las coordenadas (x,y,z) del cubo en el tablero almacenandolas en el vector Position
+        #Inicializar las coordenadas (x,y,z) del Plataforma en el tablero almacenandolas en el vector Position
         self.Position[0] = random.randrange(-self.DimBoard,self.DimBoard)
         self.Position[1] = 5
         self.Position[2] = random.randrange(-self.DimBoard,self.DimBoard)
@@ -53,7 +56,7 @@ class Cubo:
         #Se cambia la maginitud del vector direccion con la variable vel
 
     def update(self):
-        #Se debe de calcular la posible nueva posicion del cubo a partir de su
+        #Se debe de calcular la posible nueva posicion del Plataforma a partir de su
         #posicion acutual (Position) y el vector de direccion (Direction)
         
         posx = self.Position[0]
@@ -66,7 +69,7 @@ class Cubo:
         new_x = posx + dirx
         new_z = posz + dirz
 
-        #Se debe verificar que el objeto cubo, con su nueva posible direccion
+        #Se debe verificar que el objeto Plataforma, con su nueva posible direccion
         #no se salga del plano actual (DimBoard)
         if new_x <= self.DimBoard:
             self.Position[0] = new_x
@@ -91,7 +94,7 @@ class Cubo:
     def draw(self, textures, id):
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(5, 5, 5)
+        glScaled(20, 20, 20)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[id])
         
@@ -101,65 +104,13 @@ class Cubo:
         ###----- Chasis (base) -----###
         # Upper face
         glTexCoord2f(0.0, 0.0)
-        glVertex3f(1.5, 0.4,-1.0) # X, Y, Z
+        glVertex3f(-3, 0, 0) # X, Y, Z
         glTexCoord2f(0.0, 1.0)
-        glVertex3f(-1.5, 0.4,-1.0)
+        glVertex3f(-3, 0, 5)
         glTexCoord2f(1.0, 1.0)
-        glVertex3f(-1.5, 0.4, 1.0)
+        glVertex3f(0, 0, 5)
         glTexCoord2f(1.0, 0.0)
-        glVertex3f(1.5, 0.4, 1.0)
-        
-        # Lower face
-        glTexCoord2f(0.0, 0.0)
-        glVertex3f(1.5,-1.0, 1.0)
-        glTexCoord2f(0.0, 1.0)
-        glVertex3f(-1.5,-1.0, 1.0)
-        glTexCoord2f(1.0, 1.0)
-        glVertex3f(-1.5,-1.0,-1.0)
-        glTexCoord2f(1.0, 0.0)
-        glVertex3f( 1.5,-1.0,-1.0)
-        
-        # Front face
-        glTexCoord2f(0.0, 0.0)
-        glVertex3f(1.5, 0.4, 1.0)
-        glTexCoord2f(0.0, 1.0)
-        glVertex3f(-1.5, 0.4, 1.0)
-        glTexCoord2f(1.0, 1.0)
-        glVertex3f(-1.5,-1.0, 1.0)
-        glTexCoord2f(1.0, 0.0)
-        glVertex3f( 1.5,-1.0, 1.0)
-        
-        # Back face
-        glTexCoord2f(0.0, 0.0)
-        glVertex3f(1.5,-1.0,-1.0)
-        glTexCoord2f(0.0, 1.0)
-        glVertex3f(-1.5,-1.0,-1.0)
-        glTexCoord2f(1.0, 1.0)
-        glVertex3f(-1.5, 0.4,-1.0)
-        glTexCoord2f(1.0, 0.0)
-        glVertex3f(1.5, 0.4,-1.0)
-        
-        # # Left face
-        glTexCoord2f(0.0, 0.0)
-        glVertex3f(-1.5, 0.4, 1.0)
-        glTexCoord2f(0.0, 1.0)
-        glVertex3f(-1.5, 0.4,-1.0)
-        glTexCoord2f(1.0, 1.0)
-        glVertex3f(-1.5,-1.0,-1.0)
-        glTexCoord2f(1.0, 0.0)
-        glVertex3f(-1.5,-1.0, 1.0)
-        
-        # Right face
-        glTexCoord2f(0.0, 0.0)
-        glVertex3f(1.5, 0.4,-1.0)
-        glTexCoord2f(0.0, 1.0)
-        glVertex3f(1.5, 0.4, 1.0)
-        glTexCoord2f(1.0, 1.0)
-        glVertex3f(1.5,-1.0, 1.0)
-        glTexCoord2f(1.0, 0.0)
-        glVertex3f(1.5,-1.0,-1.0)
-        
-        
+        glVertex3f(5, 0, 0) 
         
         glEnd()
         glDisable(GL_TEXTURE_2D)

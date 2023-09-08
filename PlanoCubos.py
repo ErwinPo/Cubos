@@ -10,24 +10,28 @@ from OpenGL.GLUT import *
 import sys
 sys.path.append('..')
 from Cubo import Cubo
-#from Plataforma import Cubo
+#from Plataforma import Plataforma
 
 screen_width = 500
 screen_height = 500
 
 textures = []
-texture1 = "slyth.bmp"
-texture2 = "textura.bmp"
+front = "Front.jpg"
+front2 = "Front2.jpg"
+body = "Body.jpg"
+side = "Side.jpg"
+piso = "textura.bmp"
+plata = "Platform.jpg"
 #vc para el obser.
 FOVY=60.0
 ZNEAR=0.01
 ZFAR=900.0
 #Variables para definir la posicion del observador
 #gluLookAt(EYE_X,EYE_Y,EYE_Z,CENTER_X,CENTER_Y,CENTER_Z,UP_X,UP_Y,UP_Z)
-EYE_X=300.0
-EYE_Y=200.0
+EYE_X=300
+EYE_Y=300.0
 EYE_Z=300.0
-CENTER_X=0
+CENTER_X=000
 CENTER_Y=0
 CENTER_Z=0
 UP_X=0
@@ -47,7 +51,7 @@ pygame.init()
 
 #cubo = Cubo(DimBoard, 1.0)
 cubos = []
-ncubos = 20
+ncubos = 1
 
 def Axis():
     glShadeModel(GL_FLAT)
@@ -102,16 +106,23 @@ def Init():
     glEnable(GL_DEPTH_TEST)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
      
-    Texturas(texture1)
-    Texturas(texture2)
+
+    Texturas(piso)
+    Texturas(front)
+    Texturas(front2)
+    Texturas(body)
+    Texturas(side)  
+    Texturas(plata)  
+    
+
     for i in range(ncubos):
-        cubos.append(Cubo(DimBoard, 1.0))
+        cubos.append(Cubo(DimBoard))
         
 def PlanoTexturizado():
     glColor3f(1.0,1.0,1.0)
     glEnable(GL_TEXTURE_2D)
     #Front face
-    glBindTexture(GL_TEXTURE_2D, textures[1])
+    glBindTexture(GL_TEXTURE_2D, textures[0])
     glBegin(GL_QUADS)
     glTexCoord2f(0.0, 0.0)
     glVertex3d(-DimBoard, 0, -DimBoard)
