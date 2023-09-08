@@ -90,12 +90,14 @@ class Cubo:
         if self.contador < 40 and self.condition == self.subiendo:
             self.contador += 1
             self.alturaplataforma += 0.5 #ACTUALIZAR POSICIÓN BASURA EJE Y
+        if self.carrying_basura == None:
+            self.condition = self.bajando
         # elif self.contador == 40 and self.condition == self.subiendo: 
         #     self.condition = self.bajando
         
-        # elif self.contador > 0 and self.condition == self.bajando:
-        #     self.contador -= 1
-        #     self.alturaplataforma -= 0.5 #ACTUALIZAR POSICIÓN BASURA EJE Y
+        if self.contador > 0 and self.condition == self.bajando:
+            self.contador -= 1
+            self.alturaplataforma -= 0.5 #ACTUALIZAR POSICIÓN BASURA EJE Y
         # else: 
         #     self.condition =self.subiendo
 
