@@ -139,8 +139,8 @@ def Init():
     Texturas(texture1)
     Texturas(texture2) 
     #Crear basura y cubos
-    basura = [Basura(DimBoard) for i in range(80)]  #basuras
-    cubos = [Cubo(DimBoard, 2.0) for i in range(5)]  #cubos, segundo argumento velocida
+    basura = [Basura(DimBoard) for i in range(50)]  #basuras
+    cubos = [Cubo(DimBoard, 2.0) for i in range(3)]  #cubos, segundo argumento velocida
     
     #basuras en plano
     basura_plano = [] 

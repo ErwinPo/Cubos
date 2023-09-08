@@ -208,19 +208,17 @@ class Cubo:
                 direccion[2] /= distancia
                 angulo = math.degrees(math.acos(self.direction[0] * direccion[0] + self.direction[2] * direccion[2])) 
             #atan2 va con ,  y acos con + 
-            glRotatef(angulo, 0, 1, 0)
-             
-        #elif self.carrying_basura:
-         #   objetivo_pos = [0,0,0] ##Se obtiene la posicion del objetivo
-          #  direccion = [objetivo_pos[0] - self.Position[0], 0, objetivo_pos[2] - self.Position[2]]
-           # distancia = math.sqrt(pow(direccion[0],2) + pow(direccion[2],2))
-
-            #if distancia > 0: #Evitamos divisiones en 0 cuando ya se llegue al objetivo
-             #   direccion[0] /= distancia
-              #  direccion[2] /= distancia
-                
-           # angulo = math.degrees(math.acos(self.direction[0] * direccion[0] + self.direction[2] * direccion[2]))
-            #glRotatef(angle, 0, 1, 0) 
+            glRotatef(angulo-90, 0, 1, 0)
+        elif self.carrying_basura:
+            objetivo_pos = [0,0,0]
+            direccion = [objetivo_pos[0] - self.Position[0], 0, objetivo_pos[2] - self.Position[2]]
+            distancia = math.sqrt(direccion[0] ** 2 + direccion[2] ** 2)
+            if distancia > 0:
+                direccion[0] /= distancia
+                direccion[2] /= distancia
+                angulo = math.degrees(math.acos(self.direction[0] * direccion[0] + self.direction[2] * direccion[2])) 
+            #atan2 va con ,  y acos con + 
+            glRotatef(angulo-90, 0, 1, 0)
             
  
 
