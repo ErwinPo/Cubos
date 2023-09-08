@@ -10,7 +10,10 @@ import random
 import math
 
 class Cubo:
-    
+
+    subiendo = 0
+    bajando = 1
+        
     def __init__(self, dim):
         #Se inicializa las coordenadas de los vertices del cubo
         self.vertexCoords = [  
@@ -30,6 +33,11 @@ class Cubo:
         
         #Se inicializa una posicion aleatoria en el tablero
         self.Position = [0,0,0]
+        
+        self.alturaplataforma = 0.5
+        self.contador = 0
+        self.condition = self.subiendo
+        
         
         #Inicializar las coordenadas (x,y,z) del cubo en el tablero almacenandolas en el vector Position
         self.Position[0] = random.randrange(-self.DimBoard,self.DimBoard)
@@ -66,7 +74,22 @@ class Cubo:
         
         new_x = posx + dirx
         new_z = posz + dirz
-
+        
+        #CHECAR CAMBIO DE ESTADOS, CUANDO COLISIONE CON UNA BASURA Y CUANDO LLEGUE AL PLANO 
+        
+        if self.contador < 40 and self.condition == self.subiendo:
+            self.contador += 1
+            self.alturaplataforma += 0.5 #ACTUALIZAR POSICIÓN BASURA EJE Y
+        elif self.contador == 40 and self.condition == self.subiendo: 
+            self.condition = self.bajando
+        
+        elif self.contador > 0 and self.condition == self.bajando:
+            self.contador -= 1
+            self.alturaplataforma -= 0.5 #ACTUALIZAR POSICIÓN BASURA EJE Y
+        else: 
+            self.condition =self.subiendo
+        
+        
         #Se debe verificar que el objeto cubo, con su nueva posible direccion
         #no se salga del plano actual (DimBoard)
         if new_x <= self.DimBoard:
@@ -92,7 +115,7 @@ class Cubo:
     def draw(self, textures, id):
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -117,7 +140,7 @@ class Cubo:
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -141,7 +164,7 @@ class Cubo:
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -165,7 +188,7 @@ class Cubo:
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -188,7 +211,7 @@ class Cubo:
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[1])
         
@@ -214,7 +237,7 @@ class Cubo:
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[2])
         
@@ -238,7 +261,7 @@ class Cubo:
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -262,7 +285,7 @@ class Cubo:
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[4])
         
@@ -286,7 +309,7 @@ class Cubo:
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -310,7 +333,7 @@ class Cubo:
         
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[4])
         
@@ -333,8 +356,8 @@ class Cubo:
         glPopMatrix()
 
         glPushMatrix()
-        glTranslatef(self.Position[0], self.Position[1], self.Position[2])
-        glScaled(20, 20, 20)
+        glTranslatef(self.Position[0], self.alturaplataforma, self.Position[2])
+        glScaled(5, 5, 5)
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[5])
         

@@ -51,7 +51,7 @@ pygame.init()
 
 #cubo = Cubo(DimBoard, 1.0)
 cubos = []
-ncubos = 1
+ncubos = 10
 
 def Axis():
     glShadeModel(GL_FLAT)
