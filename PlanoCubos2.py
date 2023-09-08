@@ -11,7 +11,7 @@ from OpenGL.GLUT import *
 # Se carga el archivo de la clase Cubo
 import sys
 sys.path.append('..')
-from Cubo import Cubo
+from Cubo2 import Cubo
 #from Plataforma import Cubo
 
 #from Basura import Esfera #La esfera
@@ -25,6 +25,12 @@ screen_width = 500
 screen_height = 500
 
 textures = []
+front = "Front.jpg"
+front2 = "Front2.jpg"
+body = "Body.jpg"
+side = "Side.jpg"
+piso = "textura.bmp"
+plata = "Platform.jpg"
 texture1 = "slyth.bmp"
 texture2 = "textura.bmp"
 #vc para el obser.
@@ -124,9 +130,14 @@ def Init():
     glEnable(GL_DEPTH_TEST)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 
+    Texturas(piso)
+    Texturas(front)
+    Texturas(front2)
+    Texturas(body)
+    Texturas(side)  
+    Texturas(plata) 
     Texturas(texture1)
-    Texturas(texture2)
-
+    Texturas(texture2) 
     #Crear basura y cubos
     basura = [Basura(DimBoard) for i in range(50)]  #basuras
     cubos = [Cubo(DimBoard, 3.0) for i in range(20)]  #cubos, segundo argumento velocida
