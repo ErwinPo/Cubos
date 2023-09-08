@@ -140,7 +140,21 @@ class Cubo:
             else:
                 self.Position[0] += direccion[0] * self.velocidad
                 self.Position[2] += direccion[2] * self.velocidad #Se actualizan las posiciones mientras sea mayor a 5 
+        elif self.carrying_basura:
+            objetivo_pos = [0,0,0] ##Se obtiene la posicion del objetivo
+            direccion = [objetivo_pos[0] - self.Position[0], 0, objetivo_pos[2] - self.Position[2]]
+            distancia = math.sqrt(pow(direccion[0],2) + pow(direccion[2],2))
 
+            if distancia > 0: #Evitamos divisiones en 0 cuando ya se llegue al objetivo
+                direccion[0] /= distancia
+                direccion[2] /= distancia
+            #Se llega al objetivo
+            if distancia < 5: 
+                self.is_moving = False  #Detiene
+            else:
+                self.Position[0] += direccion[0] * self.velocidad
+                self.Position[2] += direccion[2] * self.velocidad #Se actualizan las posiciones mientras sea mayor a 5 
+        
         
  
     def recoger_basura(self, basura, plano=None):
