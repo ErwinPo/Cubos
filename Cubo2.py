@@ -23,6 +23,10 @@ class Cubo:
         self.objetivo = None 
         self.recolectando = False #No se uso
         self.carrying_basura = None
+        
+        self.angulo = 0
+        self.direction = (0, 0, 1)  #Dirección inicial
+        self.objetivo_direction = (0, 0, 1)  
   
 
         
@@ -188,6 +192,35 @@ class Cubo:
             objetivo = random.choice(basuras_disponibles)
             if not objetivo.pickedup:
                 self.objetivo = objetivo
+                
+                
+     #def rotar(self):
+     #   angle = math.degrees(math.atan2(self.Direction[2], self.Direction[0]))
+      #  glRotatef(angle, 0, 1, 0) 
+      
+      
+    def rotar(self):
+        if self.objetivo:
+            direccion = [self.objetivo.Position[0] - self.Position[0], 0, self.objetivo.Position[2] - self.Position[2]]
+            distancia = math.sqrt(direccion[0] ** 2 + direccion[2] ** 2)
+            if distancia > 0:
+                direccion[0] /= distancia
+                direccion[2] /= distancia
+                angulo = math.degrees(math.acos(self.direction[0] * direccion[0] + self.direction[2] * direccion[2])) 
+            #atan2 va con ,  y acos con + 
+            glRotatef(angulo, 0, 1, 0)
+             
+        #elif self.carrying_basura:
+         #   objetivo_pos = [0,0,0] ##Se obtiene la posicion del objetivo
+          #  direccion = [objetivo_pos[0] - self.Position[0], 0, objetivo_pos[2] - self.Position[2]]
+           # distancia = math.sqrt(pow(direccion[0],2) + pow(direccion[2],2))
+
+            #if distancia > 0: #Evitamos divisiones en 0 cuando ya se llegue al objetivo
+             #   direccion[0] /= distancia
+              #  direccion[2] /= distancia
+                
+           # angulo = math.degrees(math.acos(self.direction[0] * direccion[0] + self.direction[2] * direccion[2]))
+            #glRotatef(angle, 0, 1, 0) 
             
  
 
@@ -195,6 +228,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -220,6 +254,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -244,6 +279,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -268,6 +304,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -291,6 +328,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[1])
         
@@ -317,6 +355,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[2])
         
@@ -341,6 +380,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -365,6 +405,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[4])
         
@@ -389,6 +430,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[3])
         
@@ -413,6 +455,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.Position[1], self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[4])
         
@@ -437,6 +480,7 @@ class Cubo:
         glPushMatrix()
         glTranslatef(self.Position[0], self.alturaplataforma, self.Position[2])
         glScaled(5, 5, 5)
+        self.rotar()
         glEnable(GL_TEXTURE_2D)
         glBindTexture(GL_TEXTURE_2D, textures[5])
         
