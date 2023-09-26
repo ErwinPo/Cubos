@@ -130,6 +130,15 @@ def Init():
     glEnable(GL_DEPTH_TEST)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 
+    glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 200, 100, 0.0))
+    glLightfv(GL_LIGHT0, GL_AMBIENT, (0.2, 0.2, 0.2, 1.0))
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 0.5, 0.5, 1.0))
+    glEnable(GL_LIGHT0)
+    glEnable(GL_LIGHTING)
+    glEnable(GL_COLOR_MATERIAL)
+    glEnable(GL_DEPTH_TEST)
+    glShadeModel(GL_SMOOTH) 
+
     Texturas(piso)
     Texturas(front)
     Texturas(front2)
@@ -140,8 +149,9 @@ def Init():
     Texturas(texture2) 
     #Crear basura y cubos
     basura = [Basura(DimBoard) for i in range(50)]  #basuras
-    cubos = [Cubo(DimBoard, 2.0) for i in range(3)]  #cubos, segundo argumento velocida
-    
+    cubos = [Cubo(DimBoard, 2.0) for i in range(5)]  #cubos, segundo argumento velocida
+
+    for i in range(len(cubos)): cubos[i].loadmodel()
     #basuras en plano
     basura_plano = [] 
    
@@ -231,7 +241,7 @@ def display():
         
          # Intenta dejar la basura en el plano si la está llevando
       
-        cubo.draw(textures, 0)
+        cubo.generate()
 
         
 

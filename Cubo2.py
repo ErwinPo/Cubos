@@ -6,6 +6,8 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
+from objloader import *
+
 from Basura import Basura
 
 import random
@@ -15,6 +17,7 @@ class Cubo:
     
     subiendo = 0
     bajando = 1
+    model = None
 
     def __init__(self, dim, velocidad):
         
@@ -74,6 +77,10 @@ class Cubo:
         
         #Se cambia la magnitud del vector dirección con la variable vel
         self.velocidad = velocidad
+
+    def loadmodel(self):
+        self.obj = OBJ("Car.obj", swapyz=True)
+        self.obj.generate()
 
     def update(self):
         #Se debe calcular la posible nueva posición del cubo a partir de su
@@ -208,7 +215,7 @@ class Cubo:
                 direccion[2] /= distancia
                 angulo = math.degrees(math.acos(self.direction[0] * direccion[0] + self.direction[2] * direccion[2])) 
             #atan2 va con ,  y acos con + 
-            glRotatef(angulo-90, 0, 1, 0)
+            glRotatef(angulo-90, 0, 0, 1)
         elif self.carrying_basura:
             objetivo_pos = [0,0,0]
             direccion = [objetivo_pos[0] - self.Position[0], 0, objetivo_pos[2] - self.Position[2]]
@@ -218,9 +225,23 @@ class Cubo:
                 direccion[2] /= distancia
                 angulo = math.degrees(math.acos(self.direction[0] * direccion[0] + self.direction[2] * direccion[2])) 
             #atan2 va con ,  y acos con + 
-            glRotatef(angulo-90, 0, 1, 0)
+            glRotatef(angulo-90, 0, 0, 1)
             
- 
+    def generate(self):
+        #global obj
+        glPushMatrix()
+        glTranslatef(self.Position[0], self.Position[1], self.Position[2])
+        glScaled(10,10,10)
+        glRotate(90,0,0,1)
+        glRotate(90,0,1,0)
+        self.rotar()
+        self.obj.render()
+        glPopMatrix()
+        if self.carrying_basura:
+            #Mover basura
+            self.carrying_basura.Position[0] = self.Position[0] - 20
+            self.carrying_basura.Position[1] = self.Position[1] + 10
+            self.carrying_basura.Position[2] = self.Position[2]
 
     def draw(self, textures, id):
         glPushMatrix()
