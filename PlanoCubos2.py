@@ -2,46 +2,42 @@ import pygame
 import random
 from pygame.locals import *
 
-
-# Cargamos las bibliotecas de OpenGL
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
-# Se carga el archivo de la clase Cubo
+from objloader import *
+
+import random
+import math
+
+
 import sys
 sys.path.append('..')
-from Cubo2 import Cubo
-#from Plataforma import Cubo
 
-#from Basura import Esfera #La esfera
-
-from Basura import Basura
-#from Plano import Plano
+from city import Cubo, Lamps, Benches, Casas
 
 done = False
 
 screen_width = 500
 screen_height = 500
 
+nceldas = 20
+
 textures = []
-front = "Front.jpg"
-front2 = "Front2.jpg"
-body = "Body.jpg"
-side = "Side.jpg"
-piso = "textura.bmp"
-plata = "Platform.jpg"
-texture1 = "slyth.bmp"
-texture2 = "textura.bmp"
+piso = "mapa.bmp"
+celda = "slyth.bmp"
+
+
 #vc para el obser.
 FOVY=60.0
 ZNEAR=0.01
 ZFAR=900.0
 #Variables para definir la posicion del observador
 #gluLookAt(EYE_X,EYE_Y,EYE_Z,CENTER_X,CENTER_Y,CENTER_Z,UP_X,UP_Y,UP_Z)
-EYE_X=300.0
-EYE_Y=200.0
-EYE_Z=300.0
+EYE_X=1.0
+EYE_Y=800.0
+EYE_Z=1.0
 CENTER_X=0
 CENTER_Y=0
 CENTER_Z=0
@@ -56,22 +52,11 @@ Y_MAX=500
 Z_MIN=-500
 Z_MAX=500
 #Dimension del plano
-DimBoard = 200
+DimBoard = 370
 DimBoard2 = 100
 
 
 pygame.init()
-
-
-######
-#instancia plano (No se uso), No se uso Clase Plano
-plan = []
-
-#plano = Plano(dim=100)
-#plan.append(plano)
-
-
-
 
 def Axis():
     glShadeModel(GL_FLAT)
@@ -111,7 +96,7 @@ def Texturas(filepath):
     glGenerateMipmap(GL_TEXTURE_2D)
     
 def Init():
-    global cubos, basura
+    global cubos, lamps1, lamps2, lamps3, lamps4, bench1, bench2, bench3, bench4, casa1
     #plano  #variables
 
     
@@ -140,31 +125,31 @@ def Init():
     glShadeModel(GL_SMOOTH) 
 
     Texturas(piso)
-    Texturas(front)
-    Texturas(front2)
-    Texturas(body)
-    Texturas(side)  
-    Texturas(plata) 
-    Texturas(texture1)
-    Texturas(texture2) 
-    #Crear basura y cubos
-    basura = [Basura(DimBoard) for i in range(50)]  #basuras
-    cubos = [Cubo(DimBoard, 2.0) for i in range(5)]  #cubos, segundo argumento velocida
+    Texturas(celda)
+ 
+    #Crear cubos
+    cubos = Cubo(DimBoard)   #cubos, segundo argumento velocida
+    lamps1 = Lamps(DimBoard, -155, -155)
+    lamps2 = Lamps(DimBoard, 155, 155)
+    lamps3 = Lamps(DimBoard, -155, 155)
+    lamps4 = Lamps(DimBoard, 155, -155)
+    bench1 = Benches(DimBoard, -110, 0)
+    bench2 = Benches(DimBoard, 0, -110)
+    bench3 = Benches(DimBoard, 110, 0)
+    bench4 = Benches(DimBoard, 0, 110)
+    casa1 = Casas(DimBoard, random.randrange(0,200), random.randrange(0,200))
 
-    for i in range(len(cubos)): cubos[i].loadmodel()
+    cubos.loadmodel()
+    lamps1.loadmodel()
+    lamps2.loadmodel()
+    lamps3.loadmodel()
+    lamps4.loadmodel()
+    bench1.loadmodel()
+    bench2.loadmodel()
+    bench3.loadmodel()
+    bench4.loadmodel()
+    casa1.loadmodel()
     #basuras en plano
-    basura_plano = [] 
-   
-
-    
-    
-
-    ####definir objetivos
-    for cubo in cubos:
-        objetivo = random.choice(basura)
-        while objetivo == cubo.objetivo:
-            objetivo = random.choice(basura)
-        cubo.objetivo = objetivo
         
         
 def PlanoTexturizado():
@@ -206,53 +191,20 @@ def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     Axis()
     PlanoTexturizado()
-    
-    plano2 = Plano2Texturizado()
-    
-    #plano.draw()
-
-
-
-    #for trash in basura:
-        #trash.draw()
-    
-
-            
-    for trash in basura:
-        if not trash.pickedup:
-            trash.draw()  
         
+    lamps1.generate()
+    lamps2.generate()
+    lamps3.generate()
+    lamps4.generate()
+    cubos.generate()
+    bench1.generate()
+    bench2.generate()
+    bench3.generate()
+    bench4.generate()
+    casa1.generate()
     
-    for cubo in cubos:
-        if (-DimBoard2 / 4 <= cubo.Position[0] <= DimBoard2 / 4) and (-DimBoard2 / 4 <= cubo.Position[2] <= DimBoard2 / 4):
-            #print("Cubo tocando plano")
-            if cubo.carrying_basura:
-                print("Dejando basura en el plano")
-                #basura.append(cubo.carrying_basura)
-                delete = cubo.carrying_basura
-                basura[basura.index(delete)].pickedup = True
-                cubo.carrying_basura = None
-                cubo.encontrar_nuevo(basura)
-        cubo.mover()
-        cubo.update()
-        cubo.recoger_basura(basura)
-        #cubo.dejar_basura(plano)
-
-        
-         # Intenta dejar la basura en el plano si la está llevando
-      
-        cubo.generate()
-
-        
-
-            
-        
-
-
-
 
 Init()
-
 
 while not done:
     for event in pygame.event.get():
